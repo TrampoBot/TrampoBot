@@ -34,3 +34,26 @@ def buscar():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
+from flask import Flask, request, jsonify, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/buscar')
+def buscar():
+    termo = request.args.get('termo')
+    if not termo:
+        return jsonify({"erro": "Especifique um termo de busca"})
+    
+    # Simulação de busca (substituir por scraping real)
+    vagas = [f"https://www.linkedin.com/jobs/search?keywords={termo}"]
+    
+    return jsonify({"vagas": vagas})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+

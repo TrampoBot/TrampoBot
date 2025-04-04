@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrampoBot - O Caça Trampo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input {
+            padding: 10px;
+            width: 300px;
+        }
+        button {
+            padding: 10px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        #resultados {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TrampoBot - O Caça Trampo</h1>
+    <p>Digite a vaga que deseja buscar:</p>
+    <input type="text" id="termo" placeholder="Ex: Programador, Designer...">
+    <button onclick="buscarVagas()">Buscar</button>
+    <div id="resultados"></div>
+
+    <script>
+        function buscarVagas() {
+            const termo = document.getElementById('termo').value;
+            if (!termo) {
+                alert('Digite um termo de busca!');
+                return;
+            }
+            fetch(`/buscar?termo=${encodeURIComponent(termo)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultados = document.getElementById('resultados');
+                    resultados.innerHTML = '<h2>Resultados:</h2>';
+                    data.vagas.forEach(vaga => {
+                        resultados.innerHTML += `<p><a href="${vaga}" target="_blank">${vaga}</a></p>`;
+                    });
+                })
+                .catch(error => console.error('Erro ao buscar:', error));
+        }
+    </script>
+</body>
+</html>
