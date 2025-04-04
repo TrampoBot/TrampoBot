@@ -28,7 +28,24 @@
     <h1>TrampoBot - O Caça Trampo</h1>
     <p>Digite a vaga que deseja buscar:</p>
     <input type="text" id="termo" placeholder="Ex: Programador, Designer...">
-    <button onclick="buscarVagas()">Buscar</button>
+    <form id="searchForm" action="" method="GET" onsubmit="redirecionar(event)">
+    <input type="text" id="vaga" name="vaga" placeholder="Ex: Programador, Designer...">
+    <button type="submit">Buscar</button>
+</form>
+
+<script>
+function redirecionar(event) {
+    event.preventDefault();  // Evita que a página recarregue
+    let vaga = document.getElementById("vaga").value;
+    if (vaga) {
+        let url = `https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent(vaga)}`;
+        window.location.href = url;  // Redireciona automaticamente
+    } else {
+        alert("Por favor, digite uma vaga antes de buscar!");
+    }
+}
+</script>
+
     <div id="resultados"></div>
 
     <script>
